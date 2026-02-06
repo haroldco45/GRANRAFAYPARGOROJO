@@ -10,15 +10,24 @@
         .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
         .vibras-tag { color: #0369a1; font-weight: bold; font-style: italic; }
         .hidden-section { display: none; }
-        .badge-cantidad { background-color: #ef4444; color: white; border-radius: 999px; padding: 2px 8px; font-size: 0.75rem; margin-left: 8px; }
+        /* Burbuja de cantidad resaltada */
+        .badge-cantidad { 
+            background-color: #ef4444; 
+            color: white; 
+            border-radius: 999px; 
+            padding: 2px 10px; 
+            font-size: 0.85rem; 
+            font-weight: bold;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body class="pb-32">
 
-    <header class="ocean-header text-white p-6 text-center shadow-md">
-        <h1 class="text-3xl font-extrabold italic">Gran Rafa</h1>
-        <p class="text-sm uppercase tracking-tighter text-sky-200">La Gran Cevichería & El Pargo Rojo</p>
-        <p class="text-xs mt-2">📍 C.C. CAUCACENTRO LOCAL 103-104</p>
+    <header class="ocean-header p-4 text-center shadow-md">
+        <img src="gran-rafa.PNG" alt="Logo Gran Rafa" class="mx-auto h-32 w-auto mb-2 drop-shadow-lg">
+        <p class="text-xs text-sky-100 opacity-80 uppercase tracking-widest">C.C. CAUCACENTRO LOCAL 103-104</p>
     </header>
 
     <main class="p-4 space-y-6 max-w-md mx-auto">
@@ -26,23 +35,23 @@
         <section id="section-datos" class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
             <div class="flex justify-between items-center mb-3 border-b pb-1">
                 <h2 class="text-blue-900 font-bold">Tus Datos</h2>
-                <button id="btn-editar" onclick="habilitarEdicion()" class="text-xs bg-gray-100 px-2 py-1 rounded text-blue-600 hidden">Editar Datos</button>
+                <button id="btn-editar" onclick="habilitarEdicion()" class="text-xs bg-yellow-100 px-3 py-1 rounded-full text-yellow-700 font-bold hidden">EDITAR DATOS</button>
             </div>
             
             <div id="inputs-datos" class="space-y-3">
-                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-2 border rounded-lg focus:outline-blue-500">
-                <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-2 border rounded-lg focus:outline-blue-500">
-                <input type="email" id="correo" placeholder="Correo electrónico" class="w-full p-2 border rounded-lg focus:outline-blue-500">
-                <button onclick="guardarDatos()" class="w-full bg-blue-100 text-blue-700 py-2 rounded-lg font-bold text-sm">Confirmar Datos</button>
+                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
+                <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
+                <input type="email" id="correo" placeholder="Correo electrónico" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
+                <button onclick="guardarDatos()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold shadow-md">CONFIRMAR MIS DATOS</button>
             </div>
-            <div id="vista-fija" class="hidden text-sm text-gray-600 italic">
-                <p id="resumen-cliente"></p>
+            <div id="vista-fija" class="hidden p-2 bg-blue-50 rounded-lg text-sm text-blue-800 border border-blue-100">
+                <p id="resumen-cliente" class="font-medium"></p>
             </div>
         </section>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
             <h2 class="text-blue-900 font-bold mb-3 border-b pb-1">Medio de Pago</h2>
-            <select id="medio-pago" class="w-full p-2 border rounded-lg focus:outline-blue-500 bg-white">
+            <select id="medio-pago" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-white font-medium text-gray-700">
                 <option value="Efectivo">Efectivo</option>
                 <option value="Transferencia Nequi/Daviplata">Transferencia Nequi/Daviplata</option>
                 <option value="Datafono">Datáfono</option>
@@ -51,57 +60,57 @@
 
         <section>
             <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Nuestro Menú</h2>
-            <div id="menu" class="space-y-3">
+            <div id="menu" class="space-y-4">
                 
-                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
+                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-8 border-orange-500">
                     <div class="flex-1">
                         <div class="flex items-center">
-                            <h3 class="font-bold text-gray-800">Ceviche de Camarón</h3>
+                            <h3 class="font-bold text-gray-800 text-lg">Ceviche de Camarón</h3>
                             <span id="cant-ceviche" class="badge-cantidad hidden">0</span>
                         </div>
-                        <p class="text-blue-600 font-bold">$25.000</p>
+                        <p class="text-blue-600 font-black text-xl">$25.000</p>
                     </div>
-                    <button onclick="sumarAlCarrito('Ceviche de Camarón', 25000, 'cant-ceviche')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
+                    <button onclick="sumarAlCarrito('Ceviche de Camarón', 25000, 'cant-ceviche')" class="bg-blue-600 text-white w-12 h-12 rounded-full font-bold shadow-lg text-2xl active:scale-90 transition">+</button>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
+                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-8 border-orange-500">
                     <div class="flex-1">
                         <div class="flex items-center">
-                            <h3 class="font-bold text-gray-800">Pargo Rojo Frito</h3>
+                            <h3 class="font-bold text-gray-800 text-lg">Pargo Rojo Frito</h3>
                             <span id="cant-pargo" class="badge-cantidad hidden">0</span>
                         </div>
-                        <p class="text-blue-600 font-bold">$45.000</p>
+                        <p class="text-blue-600 font-black text-xl">$45.000</p>
                     </div>
-                    <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000, 'cant-pargo')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
+                    <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000, 'cant-pargo')" class="bg-blue-600 text-white w-12 h-12 rounded-full font-bold shadow-lg text-2xl active:scale-90 transition">+</button>
                 </div>
 
             </div>
         </section>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
-            <h2 class="text-blue-900 font-bold mb-2">Observaciones</h2>
-            <textarea id="observaciones" rows="2" placeholder="Ej: Traer cambio de $50 mil..." class="w-full p-2 border rounded-lg focus:outline-blue-500"></textarea>
+            <h2 class="text-blue-900 font-bold mb-2">Observaciones del Pedido</h2>
+            <textarea id="observaciones" rows="2" placeholder="Ej: Sin cebolla, picante aparte..." class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50"></textarea>
         </section>
 
         <div class="text-center py-6">
-            <p class="text-sm text-gray-400 italic">App hecha por <span class="vibras-tag text-blue-600">Vibras Positivas</span></p>
+            <p class="text-sm text-gray-400 italic font-medium">App hecha por <span class="vibras-tag">Vibras Positivas</span></p>
         </div>
     </main>
 
-    <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.1)]">
+    <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-8px_20px_rgba(0,0,0,0.15)] z-50">
         <div class="flex justify-between items-center max-w-md mx-auto">
             <div>
-                <p class="text-gray-500 text-xs font-bold uppercase">Total Pedido:</p>
-                <p id="total" class="text-3xl font-black text-blue-900">$0</p>
+                <p class="text-gray-400 text-xs font-bold uppercase">Total a Pagar:</p>
+                <p id="total" class="text-3xl font-black text-blue-900 leading-none">$0</p>
             </div>
-            <button onclick="generarPedido()" class="bg-green-600 text-white px-8 py-3 rounded-2xl font-bold text-lg hover:bg-green-700 shadow-md">
+            <button onclick="generarPedido()" class="bg-green-600 text-white px-10 py-4 rounded-2xl font-black text-xl hover:bg-green-700 shadow-xl active:scale-95 transition">
                 PEDIR YA
             </button>
         </div>
     </footer>
 
     <script>
-        let carrito = {}; // Ahora usamos un objeto para contar cantidades
+        let carrito = {};
         let sumaTotal = 0;
 
         function guardarDatos() {
@@ -112,8 +121,8 @@
                 document.getElementById('inputs-datos').classList.add('hidden-section');
                 document.getElementById('vista-fija').classList.remove('hidden-section');
                 document.getElementById('btn-editar').classList.remove('hidden');
-                document.getElementById('resumen-cliente').innerText = `${n} | ${d} | ${c}`;
-            } else { alert("Completa tus datos."); }
+                document.getElementById('resumen-cliente').innerText = `Enviando a: ${n} | ${d}`;
+            } else { alert("Por favor completa Nombre, Dirección y Correo."); }
         }
 
         function habilitarEdicion() {
@@ -123,19 +132,14 @@
         }
 
         function sumarAlCarrito(nombre, precio, idBadge) {
-            // Lógica de conteo
             if (!carrito[nombre]) {
                 carrito[nombre] = { cantidad: 1, precio: precio };
             } else {
                 carrito[nombre].cantidad += 1;
             }
-            
-            // Actualizar visualmente el número al lado del plato
             const badge = document.getElementById(idBadge);
             badge.innerText = carrito[nombre].cantidad;
             badge.classList.remove('hidden');
-
-            // Actualizar Total
             sumaTotal += precio;
             document.getElementById('total').innerText = '$' + sumaTotal.toLocaleString('es-CO');
         }
@@ -148,24 +152,24 @@
             const obs = document.getElementById('observaciones').value;
 
             if (!nombre || !direccion || Object.keys(carrito).length === 0) {
-                alert("Completa tus datos y selecciona al menos un plato.");
+                alert("Verifica tus datos y que hayas seleccionado productos.");
                 return;
             }
 
-            // Formatear lista detallada con cantidades
-            let detallePedido = "";
-            for (const producto in carrito) {
-                detallePedido += `- ${carrito[producto].cantidad}x ${producto}\n`;
+            let detalle = "";
+            for (const p in carrito) {
+                detalle += `✅ ${carrito[p].cantidad}x ${p}\n`;
             }
 
-            const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
+            const mensaje = `*PEDIDO GRAN RAFA - EL PARGO ROJO*\n\n` +
                             `👤 *Cliente:* ${nombre}\n` +
                             `📍 *Dirección:* ${direccion}\n` +
+                            `📧 *Correo:* ${correo}\n` +
                             `💳 *Pago:* ${pago}\n\n` +
-                            `🍤 *DETALLE:* \n${detallePedido}\n` +
-                            `💰 *TOTAL:* $${sumaTotal.toLocaleString('es-CO')}\n` +
+                            `🍽️ *DETALLE DEL PEDIDO:* \n${detalle}\n` +
+                            `💰 *TOTAL NETO:* $${sumaTotal.toLocaleString('es-CO')}\n` +
                             `📝 *Nota:* ${obs}\n\n` +
-                            `_App hecha por Vibras Positivas_`;
+                            `_Orden generada por Vibras Positivas_`;
 
             const url = `https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
