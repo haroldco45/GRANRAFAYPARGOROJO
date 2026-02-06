@@ -8,9 +8,7 @@
     <style>
         body { background-color: #f8fafc; font-family: sans-serif; }
         .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
-        .vibras-tag { color: #0369a1; font-weight: bold; font-style: italic; }
         .hidden-section { display: none; }
-        /* Burbuja de cantidad resaltada */
         .badge-cantidad { 
             background-color: #ef4444; 
             color: white; 
@@ -42,9 +40,9 @@
                 <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
                 <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
                 <input type="email" id="correo" placeholder="Correo electrónico" class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50">
-                <button onclick="guardarDatos()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold shadow-md">CONFIRMAR MIS DATOS</button>
+                <button onclick="guardarDatos()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold shadow-md uppercase text-sm">Confirmar Mis Datos</button>
             </div>
-            <div id="vista-fija" class="hidden p-2 bg-blue-50 rounded-lg text-sm text-blue-800 border border-blue-100">
+            <div id="vista-fija" class="hidden p-3 bg-blue-50 rounded-lg text-sm text-blue-800 border border-blue-100">
                 <p id="resumen-cliente" class="font-medium"></p>
             </div>
         </section>
@@ -61,7 +59,6 @@
         <section>
             <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Nuestro Menú</h2>
             <div id="menu" class="space-y-4">
-                
                 <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-8 border-orange-500">
                     <div class="flex-1">
                         <div class="flex items-center">
@@ -83,18 +80,20 @@
                     </div>
                     <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000, 'cant-pargo')" class="bg-blue-600 text-white w-12 h-12 rounded-full font-bold shadow-lg text-2xl active:scale-90 transition">+</button>
                 </div>
-
             </div>
         </section>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
-            <h2 class="text-blue-900 font-bold mb-2">Observaciones del Pedido</h2>
-            <textarea id="observaciones" rows="2" placeholder="Ej: Sin cebolla, picante aparte..." class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50"></textarea>
+            <h2 class="text-blue-900 font-bold mb-2">Observaciones</h2>
+            <textarea id="observaciones" rows="2" placeholder="Ej: Traer cambio de $50 mil..." class="w-full p-3 border rounded-lg focus:outline-blue-500 bg-gray-50"></textarea>
         </section>
 
         <div class="text-center py-6">
-            <p class="text-sm text-gray-400 italic font-medium">App hecha por <span class="vibras-tag">Vibras Positivas</span></p>
+            <p class="text-sm text-gray-500 font-medium italic">
+                App hecha por <span class="text-blue-700 font-bold">Vibras Positivas</span>
+            </p>
         </div>
+
     </main>
 
     <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-8px_20px_rgba(0,0,0,0.15)] z-50">
@@ -122,7 +121,7 @@
                 document.getElementById('vista-fija').classList.remove('hidden-section');
                 document.getElementById('btn-editar').classList.remove('hidden');
                 document.getElementById('resumen-cliente').innerText = `Enviando a: ${n} | ${d}`;
-            } else { alert("Por favor completa Nombre, Dirección y Correo."); }
+            } else { alert("Por favor completa tus datos."); }
         }
 
         function habilitarEdicion() {
@@ -152,24 +151,21 @@
             const obs = document.getElementById('observaciones').value;
 
             if (!nombre || !direccion || Object.keys(carrito).length === 0) {
-                alert("Verifica tus datos y que hayas seleccionado productos.");
+                alert("Verifica tus datos y productos.");
                 return;
             }
 
             let detalle = "";
-            for (const p in carrito) {
-                detalle += `✅ ${carrito[p].cantidad}x ${p}\n`;
-            }
+            for (const p in carrito) { detalle += `✅ ${carrito[p].cantidad}x ${p}\n`; }
 
-            const mensaje = `*PEDIDO GRAN RAFA - EL PARGO ROJO*\n\n` +
+            const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
                             `👤 *Cliente:* ${nombre}\n` +
                             `📍 *Dirección:* ${direccion}\n` +
-                            `📧 *Correo:* ${correo}\n` +
                             `💳 *Pago:* ${pago}\n\n` +
-                            `🍽️ *DETALLE DEL PEDIDO:* \n${detalle}\n` +
-                            `💰 *TOTAL NETO:* $${sumaTotal.toLocaleString('es-CO')}\n` +
+                            `🍽️ *DETALLE:* \n${detalle}\n` +
+                            `💰 *TOTAL:* $${sumaTotal.toLocaleString('es-CO')}\n` +
                             `📝 *Nota:* ${obs}\n\n` +
-                            `_Orden generada por Vibras Positivas_`;
+                            `_Hecho por Vibras Positivas_`;
 
             const url = `https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
