@@ -8,6 +8,7 @@
     <style>
         body { background-color: #f8fafc; font-family: sans-serif; }
         .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
+        .hidden-section { display: none; }
         .badge-cantidad { 
             background-color: #ef4444; color: white; border-radius: 999px; 
             padding: 2px 10px; font-size: 0.85rem; font-weight: bold;
@@ -20,7 +21,7 @@
 
     <header class="ocean-header p-4 text-center shadow-md">
         <img src="gran-rafa.PNG" alt="Logo Gran Rafa" class="mx-auto h-32 w-auto mb-2 drop-shadow-lg">
-        <p class="text-xs text-sky-100 opacity-80 uppercase tracking-widest">C.C. CAUCACENTRO LOCAL 103-104</p>
+        <p class="text-xs text-sky-100 opacity-80 uppercase tracking-widest text-center">C.C. CAUCACENTRO LOCAL 103-104</p>
     </header>
 
     <main class="p-4 max-w-md mx-auto space-y-4">
@@ -28,106 +29,47 @@
         <section id="section-datos" class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
             <div class="flex justify-between items-center mb-3">
                 <h2 class="text-blue-900 font-bold">Tus Datos</h2>
-                <button id="btn-editar" onclick="habilitarEdicion()" class="text-xs bg-yellow-100 px-3 py-1 rounded-full text-yellow-700 font-bold hidden text-sm">EDITAR</button>
+                <button id="btn-editar" onclick="habilitarEdicion()" class="text-xs bg-yellow-400 px-3 py-1 rounded-full text-black font-bold hidden">EDITAR DATOS</button>
             </div>
             <div id="inputs-datos" class="space-y-2">
-                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-2 border rounded-lg">
-                <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-2 border rounded-lg">
-                <input type="email" id="correo" placeholder="Correo electrónico" class="w-full p-2 border rounded-lg">
-                <button onclick="guardarDatos()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold">CONFIRMAR DATOS</button>
+                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-2 border rounded-lg focus:outline-blue-500">
+                <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-2 border rounded-lg focus:outline-blue-500">
+                <input type="email" id="correo" placeholder="Correo electrónico" class="w-full p-2 border rounded-lg focus:outline-blue-500">
+                <button onclick="guardarDatos()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold shadow-md">CONFIRMAR MIS DATOS</button>
             </div>
-            <div id="vista-fija" class="hidden p-2 bg-blue-50 rounded-lg text-sm text-blue-800 italic">
+            <div id="vista-fija" class="hidden p-2 bg-blue-50 rounded-lg text-sm text-blue-800 border border-blue-100 italic">
                 <p id="resumen-cliente"></p>
             </div>
         </section>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
             <h2 class="text-blue-900 font-bold mb-2">Medio de Pago</h2>
-            <select id="medio-pago" class="w-full p-2 border rounded-lg">
+            <select id="medio-pago" class="w-full p-2 border rounded-lg bg-white">
                 <option value="Efectivo">Efectivo</option>
-                <option value="Transferencia Nequi/Daviplata">Nequi / Daviplata</option>
-                <option value="Datafono">Datáfono</option>
+                <option value="Transferencia Nequi/Daviplata">Transferencia Nequi / Daviplata</option>
+                <option value="Datafono">Datáfono (Llevamos el equipo)</option>
             </select>
         </section>
 
-        <div id="contenedor-menu">
-            
-            <div class="categoria-title">🥘 ENTRADAS</div>
-            <div class="space-y-2 mt-2">
-                <script>
-                    const entradas = [
-                        ["Crema de Cebolla", 15000], ["Crema de Pollo", 15000], ["Crema de Champiñones", 16000],
-                        ["Crema de Camarón", 24000], ["Crema de Camarón Gran Rafa", 25000], ["Patacón con Suero", 16000],
-                        ["Patacón con Hogao", 16000], ["Yuca Frita con Suero", 16000], ["Yuca Frita con Hogao", 16000],
-                        ["Platanitos Chips con Suero", 16000], ["Platanitos Chips con Hogao", 18000]
-                    ];
-                </script>
-            </div>
-
-            <div class="categoria-title">🐟 PESCADOS Y MARISCOS</div>
-            <div class="space-y-2 mt-2">
-                <script>
-                    const pescados = [
-                        ["Cazuela de Mariscos", 52000], ["Cazuela de Mariscos Gratinada", 58000], ["Filete Robalo/Pargo Plancha", 50000],
-                        ["Filete Robalo/Pargo Brasa", 50000], ["Filete Robalo/Pargo Milanesa", 55000], ["Filete Robalo/Pargo Gratinado", 65000],
-                        ["Pargo Rojo Frito (Según tamaño)", 0], ["Sierra Frita", 0], ["Pulpo al Ajillo", 52000],
-                        ["Langostino a la Brasa", 62000], ["Salmón a la Plancha", 50000], ["Camarón al Ajillo", 70000]
-                    ];
-                </script>
-            </div>
-
-            <div class="categoria-title">🥩 ASADOS Y CORTES</div>
-            <div class="space-y-2 mt-2">
-                <script>
-                    const asados = [
-                        ["Carne Gran Rafa de Res", 33000], ["Punta de Anca Mediana", 42000], ["Punta de Anca Especial", 45000],
-                        ["Baby Beef (400gr)", 44000], ["Solomito Hawaiano", 40000], ["Fillet Mignon", 45000],
-                        ["Churrasco Argentino", 42000], ["Churrasco a la Mexicana", 48000], ["Sobrebarriga a la Brasa", 42000]
-                    ];
-                </script>
-            </div>
-
-            <div class="categoria-title">🍳 DESAYUNOS (7 AM - 11 AM)</div>
-            <div class="space-y-2 mt-2">
-                <script>
-                    const desayunos = [
-                        ["Calentado con Huevos y Patacón", 17500], ["Calentado con Huevos y Arepa", 15500],
-                        ["Huevos Rancheros con Patacón", 19500], ["Omelette Jamón y Queso", 19500],
-                        ["Calentado con Chicharrón", 20500]
-                    ];
-                </script>
-            </div>
-
-            <div class="categoria-title">🍔 COMIDA RÁPIDA</div>
-            <div class="space-y-2 mt-2">
-                <script>
-                    const rapida = [
-                        ["Salchipapas", 17000], ["Salchipollos", 20000], ["Hamburguesa Sencilla", 22000],
-                        ["Hamburguesa Doble", 25000], ["Hamburguesa de la Casa", 30000]
-                    ];
-                </script>
-            </div>
-            
-            <div id="menu-dinamico"></div>
-        </div>
+        <div id="menu-dinamico"></div>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
-            <h2 class="text-blue-900 font-bold mb-2">Observaciones</h2>
-            <textarea id="observaciones" rows="2" placeholder="Ej: Sin cebolla, picante aparte..." class="w-full p-2 border rounded-lg"></textarea>
+            <h2 class="text-blue-900 font-bold mb-2">Observaciones Especiales</h2>
+            <textarea id="observaciones" rows="2" placeholder="Ej: Traer cambio de $50 mil, sin cebolla..." class="w-full p-2 border rounded-lg focus:outline-blue-500"></textarea>
         </section>
 
         <div class="text-center py-6">
-            <p class="text-sm text-gray-400 italic">App hecha por <span class="text-blue-600 font-bold">Vibras Positivas</span></p>
+            <p class="text-sm text-gray-400 font-medium italic">App hecha por <span class="text-blue-600 font-bold">Vibras Positivas</span></p>
         </div>
     </main>
 
-    <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-lg z-50">
+    <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.1)] z-50">
         <div class="flex justify-between items-center max-w-md mx-auto">
             <div>
                 <p class="text-gray-400 text-xs font-bold uppercase">Total:</p>
-                <p id="total" class="text-3xl font-black text-blue-900 leading-none">$0</p>
+                <p id="total" class="text-3xl font-black text-blue-900">$0</p>
             </div>
-            <button onclick="generarPedido()" class="bg-green-600 text-white px-8 py-4 rounded-2xl font-black text-xl">PEDIR YA</button>
+            <button onclick="generarPedido()" class="bg-green-600 text-white px-8 py-3 rounded-2xl font-black text-xl hover:bg-green-700 shadow-md">PEDIR YA</button>
         </div>
     </footer>
 
@@ -135,32 +77,64 @@
         let carrito = {};
         let sumaTotal = 0;
 
-        function renderizarCategoria(nombreCat, items) {
-            let html = `<div class="categoria-title">${nombreCat}</div><div class="space-y-2 mt-2">`;
-            items.forEach((item, index) => {
-                const idLabel = `cant-${nombreCat.replace(/\s/g, '')}-${index}`;
-                html += `
-                    <div class="bg-white p-3 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-400">
-                        <div class="flex-1">
-                            <div class="flex items-center">
-                                <span class="font-bold text-gray-800 text-sm">${item[0]}</span>
-                                <span id="${idLabel}" class="badge-cantidad hidden">0</span>
+        // Definición de platos basada en tus fotos
+        const categorias = {
+            "🥘 ENTRADAS": [["Crema de Camarón", 24000], ["Crema Gran Rafa", 25000], ["Patacón con Suero", 16000], ["Yuca Frita con Hogao", 16000]],
+            "🐟 PESCADOS Y MARISCOS": [["Cazuela de Mariscos", 52000], ["Pargo Rojo Frito", 45000], ["Sierra Frita", 42000], ["Salmón a la Plancha", 50000]],
+            "🥩 ASADOS": [["Punta de Anca Especial", 45000], ["Baby Beef (400gr)", 44000], ["Solomito Hawaiano", 40000]],
+            "🍔 COMIDAS RÁPIDAS": [["Salchipapas", 17000], ["Hamburguesa Sencilla", 22000], ["Hamburguesa Doble", 25000]]
+        };
+
+        function renderizarMenu() {
+            let menuHTML = "";
+            for (let cat in categorias) {
+                menuHTML += `<div class="categoria-title">${cat}</div><div class="space-y-3 mt-3">`;
+                categorias[cat].forEach((item, index) => {
+                    const idBadge = `badge-${cat.replace(/\s/g, '')}-${index}`;
+                    menuHTML += `
+                        <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
+                            <div class="flex-1">
+                                <div class="flex items-center">
+                                    <h3 class="font-bold text-gray-800 text-sm">${item[0]}</h3>
+                                    <span id="${idBadge}" class="badge-cantidad hidden">0</span>
+                                </div>
+                                <p class="text-blue-600 font-bold">$${item[1].toLocaleString()}</p>
                             </div>
-                            <p class="text-blue-600 font-bold">${item[1] > 0 ? '$' + item[1].toLocaleString() : 'S. Tamaño'}</p>
-                        </div>
-                        <button onclick="sumarAlCarrito('${item[0]}', ${item[1]}, '${idLabel}')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow">+</button>
-                    </div>`;
-            });
-            html += `</div>`;
-            document.getElementById('menu-dinamico').innerHTML += html;
+                            <div class="flex items-center gap-2">
+                                <button onclick="restarDelCarrito('${item[0]}', ${item[1]}, '${idBadge}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full font-black shadow-sm">-</button>
+                                <button onclick="sumarAlCarrito('${item[0]}', ${item[1]}, '${idBadge}')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-md">+</button>
+                            </div>
+                        </div>`;
+                });
+                menuHTML += `</div>`;
+            }
+            document.getElementById('menu-dinamico').innerHTML = menuHTML;
         }
 
-        // Cargar todos los platos
-        renderizarCategoria("🥘 ENTRADAS", entradas);
-        renderizarCategoria("🐟 PESCADOS Y MARISCOS", pescados);
-        renderizarCategoria("🥩 ASADOS Y CORTES", asados);
-        renderizarCategoria("🍳 DESAYUNOS", desayunos);
-        renderizarCategoria("🍔 COMIDA RÁPIDA", rapida);
+        function sumarAlCarrito(nombre, precio, idBadge) {
+            if (!carrito[nombre]) { carrito[nombre] = { cantidad: 1, precio: precio }; }
+            else { carrito[nombre].cantidad += 1; }
+            actualizarInterfaz(nombre, idBadge, precio, true);
+        }
+
+        function restarDelCarrito(nombre, precio, idBadge) {
+            if (carrito[nombre] && carrito[nombre].cantidad > 0) {
+                carrito[nombre].cantidad -= 1;
+                actualizarInterfaz(nombre, idBadge, precio, false);
+                if (carrito[nombre].cantidad === 0) { delete carrito[nombre]; }
+            }
+        }
+
+        function actualizarInterfaz(nombre, idBadge, precio, esSuma) {
+            const badge = document.getElementById(idBadge);
+            const cant = carrito[nombre] ? carrito[nombre].cantidad : 0;
+            
+            badge.innerText = cant;
+            badge.classList.toggle('hidden', cant === 0);
+            
+            sumaTotal = esSuma ? sumaTotal + precio : sumaTotal - precio;
+            document.getElementById('total').innerText = '$' + Math.max(0, sumaTotal).toLocaleString('es-CO');
+        }
 
         function guardarDatos() {
             const n = document.getElementById('nombre').value;
@@ -170,8 +144,8 @@
                 document.getElementById('inputs-datos').classList.add('hidden-section');
                 document.getElementById('vista-fija').classList.remove('hidden-section');
                 document.getElementById('btn-editar').classList.remove('hidden');
-                document.getElementById('resumen-cliente').innerText = `${n} | ${d}`;
-            } else { alert("Completa tus datos."); }
+                document.getElementById('resumen-cliente').innerText = `Pedido para: ${n} | ${d}`;
+            } else { alert("Por favor completa tus datos personales."); }
         }
 
         function habilitarEdicion() {
@@ -180,41 +154,33 @@
             document.getElementById('btn-editar').classList.add('hidden');
         }
 
-        function sumarAlCarrito(nombre, precio, idBadge) {
-            if (!carrito[nombre]) { carrito[nombre] = { cantidad: 1, precio: precio }; }
-            else { carrito[nombre].cantidad += 1; }
-            const badge = document.getElementById(idBadge);
-            badge.innerText = carrito[nombre].cantidad;
-            badge.classList.remove('hidden');
-            sumaTotal += precio;
-            document.getElementById('total').innerText = '$' + sumaTotal.toLocaleString('es-CO');
-        }
-
         function generarPedido() {
-            const nombre = document.getElementById('nombre').value;
-            const direccion = document.getElementById('direccion').value;
-            const pago = document.getElementById('medio-pago').value;
-            const obs = document.getElementById('observaciones').value;
+            const n = document.getElementById('nombre').value;
+            const d = document.getElementById('direccion').value;
+            const p = document.getElementById('medio-pago').value;
+            const o = document.getElementById('observaciones').value;
 
-            if (!nombre || !direccion || Object.keys(carrito).length === 0) {
-                alert("Verifica tus datos y productos.");
+            if (!n || !d || Object.keys(carrito).length === 0) {
+                alert("Verifica tus datos y productos seleccionados.");
                 return;
             }
 
             let detalle = "";
-            for (const p in carrito) { detalle += `✅ ${carrito[p].cantidad}x ${p}\n`; }
+            for (const item in carrito) { detalle += `✅ ${carrito[item].cantidad}x ${item}\n`; }
 
             const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
-                            `👤 *Cliente:* ${nombre}\n` +
-                            `📍 *Dirección:* ${direccion}\n` +
-                            `💳 *Pago:* ${pago}\n\n` +
-                            `🍽️ *DETALLE:* \n${detalle}\n` +
+                            `👤 *Cliente:* ${n}\n` +
+                            `📍 *Dirección:* ${d}\n` +
+                            `💳 *Pago:* ${p}\n\n` +
+                            `🍤 *DETALLE:* \n${detalle}\n` +
                             `💰 *TOTAL:* $${sumaTotal.toLocaleString('es-CO')}\n` +
-                            `📝 *Nota:* ${obs}\n\n` +
+                            `📝 *Nota:* ${o}\n\n` +
                             `_App Vibras Positivas_`;
 
             window.open(`https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
+
+        renderizarMenu();
     </script>
 </body>
 </html>
