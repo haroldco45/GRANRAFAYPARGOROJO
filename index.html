@@ -10,6 +10,7 @@
         .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
         .vibras-tag { color: #0369a1; font-weight: bold; font-style: italic; }
         .hidden-section { display: none; }
+        .badge-cantidad { background-color: #ef4444; color: white; border-radius: 999px; padding: 2px 8px; font-size: 0.75rem; margin-left: 8px; }
     </style>
 </head>
 <body class="pb-32">
@@ -17,7 +18,7 @@
     <header class="ocean-header text-white p-6 text-center shadow-md">
         <h1 class="text-3xl font-extrabold italic">Gran Rafa</h1>
         <p class="text-sm uppercase tracking-tighter text-sky-200">La Gran Cevichería & El Pargo Rojo</p>
-        <p class="text-xs mt-2">📍 C.C. CAUCACENTRO LOCAL 103-104 | 📱 3207848287</p>
+        <p class="text-xs mt-2">📍 C.C. CAUCACENTRO LOCAL 103-104</p>
     </header>
 
     <main class="p-4 space-y-6 max-w-md mx-auto">
@@ -51,26 +52,35 @@
         <section>
             <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Nuestro Menú</h2>
             <div id="menu" class="space-y-3">
+                
                 <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
                     <div class="flex-1">
-                        <h3 class="font-bold text-gray-800">Ceviche de Camarón</h3>
+                        <div class="flex items-center">
+                            <h3 class="font-bold text-gray-800">Ceviche de Camarón</h3>
+                            <span id="cant-ceviche" class="badge-cantidad hidden">0</span>
+                        </div>
                         <p class="text-blue-600 font-bold">$25.000</p>
                     </div>
-                    <button onclick="sumarAlCarrito('Ceviche de Camarón', 25000)" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
+                    <button onclick="sumarAlCarrito('Ceviche de Camarón', 25000, 'cant-ceviche')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
                     <div class="flex-1">
-                        <h3 class="font-bold text-gray-800">Pargo Rojo Frito</h3>
+                        <div class="flex items-center">
+                            <h3 class="font-bold text-gray-800">Pargo Rojo Frito</h3>
+                            <span id="cant-pargo" class="badge-cantidad hidden">0</span>
+                        </div>
                         <p class="text-blue-600 font-bold">$45.000</p>
                     </div>
-                    <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000)" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
+                    <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000, 'cant-pargo')" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold shadow-lg">+</button>
                 </div>
+
             </div>
         </section>
 
         <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
             <h2 class="text-blue-900 font-bold mb-2">Observaciones</h2>
-            <textarea id="observaciones" rows="2" placeholder="Ej: Sin cebolla, traer cambio de $50 mil..." class="w-full p-2 border rounded-lg focus:outline-blue-500"></textarea>
+            <textarea id="observaciones" rows="2" placeholder="Ej: Traer cambio de $50 mil..." class="w-full p-2 border rounded-lg focus:outline-blue-500"></textarea>
         </section>
 
         <div class="text-center py-6">
@@ -91,22 +101,19 @@
     </footer>
 
     <script>
-        let carrito = [];
+        let carrito = {}; // Ahora usamos un objeto para contar cantidades
         let sumaTotal = 0;
 
         function guardarDatos() {
             const n = document.getElementById('nombre').value;
             const d = document.getElementById('direccion').value;
             const c = document.getElementById('correo').value;
-
             if(n && d && c) {
                 document.getElementById('inputs-datos').classList.add('hidden-section');
                 document.getElementById('vista-fija').classList.remove('hidden-section');
                 document.getElementById('btn-editar').classList.remove('hidden');
                 document.getElementById('resumen-cliente').innerText = `${n} | ${d} | ${c}`;
-            } else {
-                alert("Por favor completa todos los datos personales.");
-            }
+            } else { alert("Completa tus datos."); }
         }
 
         function habilitarEdicion() {
@@ -115,8 +122,20 @@
             document.getElementById('btn-editar').classList.add('hidden');
         }
 
-        function sumarAlCarrito(nombre, precio) {
-            carrito.push(nombre);
+        function sumarAlCarrito(nombre, precio, idBadge) {
+            // Lógica de conteo
+            if (!carrito[nombre]) {
+                carrito[nombre] = { cantidad: 1, precio: precio };
+            } else {
+                carrito[nombre].cantidad += 1;
+            }
+            
+            // Actualizar visualmente el número al lado del plato
+            const badge = document.getElementById(idBadge);
+            badge.innerText = carrito[nombre].cantidad;
+            badge.classList.remove('hidden');
+
+            // Actualizar Total
             sumaTotal += precio;
             document.getElementById('total').innerText = '$' + sumaTotal.toLocaleString('es-CO');
         }
@@ -128,21 +147,25 @@
             const pago = document.getElementById('medio-pago').value;
             const obs = document.getElementById('observaciones').value;
 
-            if (!nombre || !direccion || carrito.length === 0) {
+            if (!nombre || !direccion || Object.keys(carrito).length === 0) {
                 alert("Completa tus datos y selecciona al menos un plato.");
                 return;
             }
 
-            const items = carrito.join(", ");
-            const mensaje = `*NUEVO PEDIDO: GRAN RAFA*\n\n` +
+            // Formatear lista detallada con cantidades
+            let detallePedido = "";
+            for (const producto in carrito) {
+                detallePedido += `- ${carrito[producto].cantidad}x ${producto}\n`;
+            }
+
+            const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
                             `👤 *Cliente:* ${nombre}\n` +
                             `📍 *Dirección:* ${direccion}\n` +
-                            `📧 *Correo:* ${correo}\n` +
-                            `💳 *Pago:* ${pago}\n` +
-                            `🍤 *Pedido:* ${items}\n` +
+                            `💳 *Pago:* ${pago}\n\n` +
+                            `🍤 *DETALLE:* \n${detallePedido}\n` +
                             `💰 *TOTAL:* $${sumaTotal.toLocaleString('es-CO')}\n` +
                             `📝 *Nota:* ${obs}\n\n` +
-                            `_App diseñada por Vibras Positivas_`;
+                            `_App hecha por Vibras Positivas_`;
 
             const url = `https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
