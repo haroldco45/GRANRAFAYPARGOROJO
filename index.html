@@ -6,87 +6,104 @@
     <title>Gran Rafa - El Pargo Rojo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #f0f9ff; }
-        .ocean-gradient { background: linear-gradient(180deg, #0284c7 0%, #075985 100%); }
-        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        body { background-color: #f8fafc; font-family: sans-serif; }
+        .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
+        .vibras-tag { color: #0369a1; font-weight: bold; font-style: italic; }
     </style>
 </head>
-<body class="pb-20">
+<body class="pb-32">
 
-    <header class="ocean-gradient text-white p-6 text-center rounded-b-3xl shadow-lg">
-        <h1 class="text-3xl font-bold italic">Gran Rafa</h1>
-        <p class="text-sm tracking-widest uppercase">La Gran Cevichería</p>
-        <div class="mt-2 text-xs opacity-90">
-            C.C. CAUCACENTRO LOCAL 103-104 <br>
-            📱 3207848287
-        </div>
+    <header class="ocean-header text-white p-6 text-center shadow-md">
+        <h1 class="text-3xl font-extrabold italic">Gran Rafa</h1>
+        <p class="text-sm uppercase tracking-tighter text-sky-200">La Gran Cevichería & El Pargo Rojo</p>
+        <p class="text-xs mt-2">📍 C.C. CAUCACENTRO LOCAL 103-104</p>
     </header>
 
     <main class="p-4 space-y-6">
+        
+        <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
+            <h2 class="text-blue-900 font-bold mb-3 border-b pb-1">Tus Datos</h2>
+            <div class="space-y-3">
+                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-2 border rounded-lg focus:outline-blue-500">
+                <input type="text" id="direccion" placeholder="Dirección de entrega" class="w-full p-2 border rounded-lg focus:outline-blue-500">
+            </div>
+        </section>
+
         <section>
-            <h2 class="text-xl font-bold text-sky-900 mb-4 border-b-2 border-sky-200">Menú de Ejemplo</h2>
-            
-            <div id="menu-container" class="grid gap-4">
-                <div class="bg-white p-4 rounded-xl card-shadow flex justify-between items-center">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Nuestro Menú</h2>
+            <div id="menu" class="space-y-3">
+                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
                     <div>
                         <h3 class="font-bold text-gray-800">Ceviche de Camarón</h3>
-                        <p class="text-sm text-gray-500 italic">Clásico con salsa de la casa</p>
-                        <span class="text-sky-700 font-bold">$25.000</span>
+                        <p class="text-blue-600 font-bold">$25.000</p>
                     </div>
-                    <button onclick="agregarAlPedido('Ceviche de Camarón', 25000)" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-orange-600">
-                        +
-                    </button>
+                    <button onclick="sumarAlCarrito('Ceviche de Camarón', 25000)" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold">+</button>
                 </div>
-
-                <div class="bg-white p-4 rounded-xl card-shadow flex justify-between items-center">
+                
+                <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
                     <div>
                         <h3 class="font-bold text-gray-800">Pargo Rojo Frito</h3>
-                        <p class="text-sm text-gray-500 italic">Acompañado de patacón y ensalada</p>
-                        <span class="text-sky-700 font-bold">$45.000</span>
+                        <p class="text-blue-600 font-bold">$45.000</p>
                     </div>
-                    <button onclick="agregarAlPedido('Pargo Rojo Frito', 45000)" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-orange-600">
-                        +
-                    </button>
+                    <button onclick="sumarAlCarrito('Pargo Rojo Frito', 45000)" class="bg-blue-600 text-white w-10 h-10 rounded-full font-bold">+</button>
                 </div>
             </div>
         </section>
+
+        <section class="bg-white p-4 rounded-xl shadow-sm border border-sky-100">
+            <h2 class="text-blue-900 font-bold mb-2">Observaciones</h2>
+            <textarea id="observaciones" rows="2" placeholder="Ej: Sin cebolla, picante aparte, traer cambio de $50..." class="w-full p-2 border rounded-lg focus:outline-blue-500"></textarea>
+        </section>
+
+        <div class="text-center py-4">
+            <p class="text-sm text-gray-400">App hecha por <span class="vibras-tag">Vibras Positivas</span></p>
+        </div>
     </main>
 
-    <div id="cart-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t p-4 flex justify-between items-center shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
-        <div>
-            <p class="text-xs text-gray-500">Total acumulado:</p>
-            <p id="total-display" class="text-xl font-black text-sky-800">$0</p>
+    <footer class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.1)]">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+            <div>
+                <p class="text-gray-500 text-xs">Total a pagar:</p>
+                <p id="total" class="text-2xl font-black text-blue-900">$0</p>
+            </div>
+            <button onclick="generarPedido()" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-green-700 transition">
+                PEDIR YA
+            </button>
         </div>
-        <button onclick="enviarWhatsApp()" class="bg-green-600 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2">
-            Pedir por WhatsApp
-        </button>
-    </div>
+    </footer>
 
     <script>
-        let pedido = [];
-        let total = 0;
+        let carrito = [];
+        let sumaTotal = 0;
 
-        function agregarAlPedido(nombre, precio) {
-            pedido.push(nombre);
-            total += precio;
-            document.getElementById('total-display').innerText = '$' + total.toLocaleString('es-CO');
-            alert(nombre + " agregado al carrito");
+        function sumarAlCarrito(nombre, precio) {
+            carrito.push(nombre);
+            sumaTotal += precio;
+            document.getElementById('total').innerText = '$' + sumaTotal.toLocaleString('es-CO');
         }
 
-        function enviarWhatsApp() {
-            if (pedido.length === 0) {
-                alert("Primero agrega algo al menú");
+        function generarPedido() {
+            const nombre = document.getElementById('nombre').value;
+            const direccion = document.getElementById('direccion').value;
+            const obs = document.getElementById('observaciones').value;
+
+            if (!nombre || !direccion || carrito.length === 0) {
+                alert("Por favor rellena tus datos y agrega al menos un plato.");
                 return;
             }
-            
-            const numero = "573207848287";
-            const items = pedido.join(", ");
-            const mensaje = `Hola Gran Rafa! Quisiera pedir: ${items}. Total: $${total.toLocaleString('es-CO')}. Ubicación: Caucacentro Local 103-104.`;
-            
-            const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensaje)}`;
+
+            const items = carrito.join(", ");
+            const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
+                            `👤 *Cliente:* ${nombre}\n` +
+                            `📍 *Dirección:* ${direccion}\n` +
+                            `🍤 *Pedido:* ${items}\n` +
+                            `💰 *Total:* $${sumaTotal.toLocaleString('es-CO')}\n` +
+                            `📝 *Nota:* ${obs}\n\n` +
+                            `_Enviado desde mi App de Vibras Positivas_`;
+
+            const url = `https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
     </script>
-
 </body>
 </html>
