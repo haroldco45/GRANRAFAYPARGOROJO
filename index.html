@@ -14,7 +14,7 @@
             padding: 2px 10px; font-size: 0.85rem; font-weight: bold;
             margin-left: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .categoria-title { background-color: #e0f2fe; color: #0369a1; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 20px; border-left: 5px solid #0369a1; }
+        .categoria-title { background-color: #e0f2fe; color: #0369a1; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 20px; border-left: 5px solid #0369a1; text-transform: uppercase; font-size: 0.9rem; }
     </style>
 </head>
 <body class="pb-40">
@@ -77,12 +77,57 @@
         let carrito = {};
         let sumaTotal = 0;
 
-        // Definición de platos basada en tus fotos
         const categorias = {
-            "🥘 ENTRADAS": [["Crema de Camarón", 24000], ["Crema Gran Rafa", 25000], ["Patacón con Suero", 16000], ["Yuca Frita con Hogao", 16000]],
-            "🐟 PESCADOS Y MARISCOS": [["Cazuela de Mariscos", 52000], ["Pargo Rojo Frito", 45000], ["Sierra Frita", 42000], ["Salmón a la Plancha", 50000]],
-            "🥩 ASADOS": [["Punta de Anca Especial", 45000], ["Baby Beef (400gr)", 44000], ["Solomito Hawaiano", 40000]],
-            "🍔 COMIDAS RÁPIDAS": [["Salchipapas", 17000], ["Hamburguesa Sencilla", 22000], ["Hamburguesa Doble", 25000]]
+            "🌅 DESAYUNOS": [
+                ["Calentado con Huevos (Patacón)", 17500], ["Calentado con Huevos (Arepa)", 15500],
+                ["Calentado Res/Cerdo/Pechuga (Patacón)", 19500], ["Calentado Res/Cerdo/Pechuga (Arepa)", 18000],
+                ["Huevos Rancheros (Patacón)", 19500], ["Huevos Rancheros (Arepa)", 17500],
+                ["Huevos Revueltos (Patacón)", 16500], ["Huevos Revueltos (Arepa)", 13000],
+                ["Huevos a la Cacerola (Patacón)", 14500], ["Huevos a la Cacerola (Arepa)", 12500],
+                ["Carne al Bistec (Papa/Yuca)", 19500], ["Calentado con Chicharrón", 20500],
+                ["Omelette (Jamón, Molida, Pollo o Tocineta)", 19500]
+            ],
+            "🥘 ENTRADAS": [
+                ["Crema de Cebolla", 15000], ["Crema de Pollo", 15000], ["Crema de Champiñones", 16000],
+                ["Crema de Camarón", 24000], ["Crema de Camarón Gran Rafa", 25000], ["Patacón con Suero", 16000],
+                ["Patacón con Hogao", 16000], ["Yuca Frita con Suero", 16000], ["Yuca Frita con Hogao", 16000],
+                ["Platanitos Chips con Suero", 16000], ["Platanitos Chips con Hogao", 18000]
+            ],
+            "🐟 PESCADOS Y MARISCOS": [
+                ["Cazuela de Mariscos", 52000], ["Cazuela de Mariscos Gratinada", 58000], ["Filete Robalo/Pargo Plancha", 50000],
+                ["Filete Robalo/Pargo Brasa", 50000], ["Filete Robalo/Pargo Milanesa", 55000], ["Filete Robalo/Pargo Gratinado", 65000],
+                ["Pulpo al Ajillo", 52000], ["Langostino Brasa/Ajillo/Milanesa", 62000], ["Langostino 7 Mares Submarino", 80000],
+                ["Salmón Plancha/Ajillo", 50000], ["Salmón Salsa Champiñones", 62000], ["Camarón Ajillo/Gratinado", 70000],
+                ["Ensopado de Bagre", 52000], ["Bagre Plancha/Brasa/Milanesa", 44000], ["Bagre Medallón Frito", 42000]
+            ],
+            "🥩 ASADOS Y CORTES": [
+                ["Carne Gran Rafa de Res", 33000], ["Punta de Anca Mediana", 42000], ["Punta de Anca Especial", 45000],
+                ["Baby Beef (400gr)", 44000], ["Solomito Hawaiano/Pimienta", 40000], ["Fillet Mignon", 45000],
+                ["Churrasco Argentino", 42000], ["Churrasco a la Mexicana", 48000], ["Sobrebarriga a la Brasa", 42000],
+                ["Lengua Brasa/Criolla/Champiñones", 40000]
+            ],
+            "🐷 CERDO Y POLLO": [
+                ["Gran Rafa de Cerdo", 30000], ["Cañón de Cerdo", 38000], ["Super Costilla BBQ", 40000],
+                ["Pechuga a la Brasa Deshuesada", 34000], ["Pollo a la Milanesa", 38000], ["Pollo Hawaiano", 40000],
+                ["Pollo Gratinado Tres Quesos", 43000]
+            ],
+            "🏔️ COMIDA MONTAÑERA": [
+                ["Bandeja Paisa", 42000], ["Cazuela de Fríjol", 33000], ["Arriero", 35000],
+                ["Cazuela Gran Rafa", 36000], ["Chicharronada", 40000]
+            ],
+            "🍚 ARROCES Y PASTAS": [
+                ["Arroz con Pollo/Cerdo", 35000], ["Arroz Oriental/Cubano", 40000], ["Arroz a la Marinera", 48000],
+                ["Pasta Napolitana/Boloñesa", 26000], ["Pasta Pollo/Carbonara", 32000], ["Lasaña Res/Pollo", 28000]
+            ],
+            "🍟 MENÚ INFANTIL Y RÁPIDA": [
+                ["Nuggets de Pollo", 24000], ["Baby Beef Junior", 24000], ["Salchipapas", 17000],
+                ["SalchiPollos/Carne/Ranchera", 20000], ["Hamburguesa Sencilla", 22000], ["Hamburguesa Doble", 25000],
+                ["Hamburguesa de la Casa", 30000]
+            ],
+            "☕ ADICIONALES Y BEBIDAS": [
+                ["Porción Patacones x4", 4000], ["Arepa Tela", 1500], ["Queso Costeño/Mozarella", 4000],
+                ["Chocolate/Cafe con Leche", 4500], ["Milo Frío", 10000], ["Tinto/Aromática", 1500]
+            ]
         };
 
         function renderizarMenu() {
@@ -90,15 +135,15 @@
             for (let cat in categorias) {
                 menuHTML += `<div class="categoria-title">${cat}</div><div class="space-y-3 mt-3">`;
                 categorias[cat].forEach((item, index) => {
-                    const idBadge = `badge-${cat.replace(/\s/g, '')}-${index}`;
+                    const idBadge = `badge-${cat.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
                     menuHTML += `
                         <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border-l-4 border-orange-500">
                             <div class="flex-1">
                                 <div class="flex items-center">
-                                    <h3 class="font-bold text-gray-800 text-sm">${item[0]}</h3>
+                                    <h3 class="font-bold text-gray-800 text-xs">${item[0]}</h3>
                                     <span id="${idBadge}" class="badge-cantidad hidden">0</span>
                                 </div>
-                                <p class="text-blue-600 font-bold">$${item[1].toLocaleString()}</p>
+                                <p class="text-blue-600 font-bold text-sm">$${item[1].toLocaleString()}</p>
                             </div>
                             <div class="flex items-center gap-2">
                                 <button onclick="restarDelCarrito('${item[0]}', ${item[1]}, '${idBadge}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full font-black shadow-sm">-</button>
@@ -128,10 +173,8 @@
         function actualizarInterfaz(nombre, idBadge, precio, esSuma) {
             const badge = document.getElementById(idBadge);
             const cant = carrito[nombre] ? carrito[nombre].cantidad : 0;
-            
             badge.innerText = cant;
             badge.classList.toggle('hidden', cant === 0);
-            
             sumaTotal = esSuma ? sumaTotal + precio : sumaTotal - precio;
             document.getElementById('total').innerText = '$' + Math.max(0, sumaTotal).toLocaleString('es-CO');
         }
@@ -145,7 +188,7 @@
                 document.getElementById('vista-fija').classList.remove('hidden-section');
                 document.getElementById('btn-editar').classList.remove('hidden');
                 document.getElementById('resumen-cliente').innerText = `Pedido para: ${n} | ${d}`;
-            } else { alert("Por favor completa tus datos personales."); }
+            } else { alert("Por favor completa tus datos."); }
         }
 
         function habilitarEdicion() {
@@ -161,7 +204,7 @@
             const o = document.getElementById('observaciones').value;
 
             if (!n || !d || Object.keys(carrito).length === 0) {
-                alert("Verifica tus datos y productos seleccionados.");
+                alert("Verifica tus datos y productos.");
                 return;
             }
 
