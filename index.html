@@ -8,7 +8,6 @@
     <style>
         body { background-color: #f8fafc; font-family: sans-serif; }
         .ocean-header { background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%); }
-        .hidden-section { display: none; }
         .badge-cantidad { 
             background-color: #ef4444; color: white; border-radius: 999px; 
             padding: 2px 10px; font-size: 0.85rem; font-weight: bold;
@@ -39,6 +38,7 @@
             </div>
             <div id="vista-fija" class="hidden p-2 bg-blue-50 rounded-lg text-sm text-blue-800 border border-blue-100 italic">
                 <p id="resumen-cliente"></p>
+                <p id="status-gps" class="text-[10px] mt-1 text-blue-400"></p>
             </div>
         </section>
 
@@ -76,6 +76,7 @@
     <script>
         let carrito = {};
         let sumaTotal = 0;
+        let ubicacionLink = "No proporcionada";
 
         const categorias = {
             "🌅 DESAYUNOS": [
@@ -129,6 +130,25 @@
                 ["Chocolate/Cafe con Leche", 4500], ["Milo Frío", 10000], ["Tinto/Aromática", 1500]
             ]
         };
+
+        // Función para obtener GPS
+        function obtenerUbicacion() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        ubicacionLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                        document.getElementById('status-gps').innerText = "📍 Ubicación GPS vinculada con éxito";
+                    },
+                    (error) => {
+                        console.warn("Error GPS:", error.message);
+                        ubicacionLink = "No autorizada por el cliente";
+                        document.getElementById('status-gps').innerText = "⚠️ GPS no disponible (debes autorizarlo)";
+                    }
+                );
+            }
+        }
 
         function renderizarMenu() {
             let menuHTML = "";
@@ -184,16 +204,17 @@
             const d = document.getElementById('direccion').value;
             const c = document.getElementById('correo').value;
             if(n && d && c) {
-                document.getElementById('inputs-datos').classList.add('hidden-section');
-                document.getElementById('vista-fija').classList.remove('hidden-section');
+                obtenerUbicacion(); // Intentar capturar GPS al confirmar
+                document.getElementById('inputs-datos').classList.add('hidden');
+                document.getElementById('vista-fija').classList.remove('hidden');
                 document.getElementById('btn-editar').classList.remove('hidden');
                 document.getElementById('resumen-cliente').innerText = `Pedido para: ${n} | ${d}`;
             } else { alert("Por favor completa tus datos."); }
         }
 
         function habilitarEdicion() {
-            document.getElementById('inputs-datos').classList.remove('hidden-section');
-            document.getElementById('vista-fija').classList.add('hidden-section');
+            document.getElementById('inputs-datos').classList.remove('hidden');
+            document.getElementById('vista-fija').classList.add('hidden');
             document.getElementById('btn-editar').classList.add('hidden');
         }
 
@@ -214,6 +235,7 @@
             const mensaje = `*PEDIDO GRAN RAFA*\n\n` +
                             `👤 *Cliente:* ${n}\n` +
                             `📍 *Dirección:* ${d}\n` +
+                            `🗺️ *GPS:* ${ubicacionLink}\n` +
                             `💳 *Pago:* ${p}\n\n` +
                             `🍤 *DETALLE:* \n${detalle}\n` +
                             `💰 *TOTAL:* $${sumaTotal.toLocaleString('es-CO')}\n` +
@@ -223,7 +245,9 @@
             window.open(`https://api.whatsapp.com/send?phone=573207848287&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
 
+        // Ejecutar al iniciar
         renderizarMenu();
+        window.onload = obtenerUbicacion; 
     </script>
 </body>
 </html>
